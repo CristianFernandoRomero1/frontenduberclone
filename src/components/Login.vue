@@ -1,5 +1,45 @@
 <template>
+  <!--  <div data-app class="login"> -->
+<!-- <v-app id="app">  -->
+  <!-- 
+  <v-layout align-center justify-center>
+    
+    <v-container class="grey lighten-5">
+      <v-row no-gutters>
+        <v-col cols="12" sm="4"> </v-col>
+        <v-col cols="12" sm="4">
+          <v-container fluid fill-height class="login">
+            <v-layout flex align-center justify-center>
+              <v-flex>
+                <v-toolbar class="pt-5 blue darken-4">
+                  <v-toolbar-title class="white--text"
+                    ><h4>Login</h4></v-toolbar-title
+                  >
+                </v-toolbar>
 
+                <v-form>
+                  <v-container>
+                    <v-text-field label="Email" v-model="email"></v-text-field>
+                  </v-container>
+                  <v-container>
+                    <v-text-field
+                      label="Password"
+                      type="password"
+                      v-model="password"
+                    ></v-text-field>
+                  </v-container>
+                  <v-btn @click="login" depressed> Sign in </v-btn>
+                </v-form>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-col>
+        <v-col cols="12" sm="4"> </v-col>
+      </v-row>
+    </v-container>
+    
+    </v-layout>
+     -->
  <v-layout align-center justify-center>
         <v-flex xs12 sm8 md6 lg5 xl4>
             <v-card>
@@ -43,9 +83,9 @@ export default {
   methods: {
     login: function () {
       ///
-      var payload = { correo: this.email, contrasena: this.password };
+      var payload = { email: this.email, password: this.password };
       axios({
-        url: "usuarioaplicacion/login", //http://localhost:5000/api/
+        url: "usuario/login", //http://localhost:5000/api/
         data: payload,
         method: "POST",
       })
@@ -54,11 +94,10 @@ export default {
             var token = resp.data.token;
             //this.$store.dispatch("setToken", resp.data.token)
             this.$store.dispatch("guardarToken",resp.data);
-          
             localStorage.setItem("user-token", token); // store the token in localstorage
             console.log(this.$store.state.token)
-            console.log(this.$store.state.theUser);
-            this.$router.push("/pasajerosolicitarviaje");
+  
+            this.$router.push("/homepage");
             // console.log(this.$router.currentRoute.fullPath);
           }
         })

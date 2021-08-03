@@ -1,18 +1,19 @@
-import Vue from 'vue';
-import App from './App.vue';
+import Vue from 'vue'
+import App from './App.vue'
 import vuetify from './plugins/vuetify';
 /* import store from './store/store.js' */
 
 import Vuex from 'vuex';
-import VueRouter from 'vue-router';
-import Login from './components/Login.vue';
-import pasajeroSolicitarViaje from './components/pasajeroSolicitarViaje.vue';
-import pasajeroViaje from './components/pasajeroViaje.vue';
-import conductorBuscarPasajero from './components/conductorBuscarPasajero.vue';
-import pasajeroViajeFinalizado from './components/pasajeroViajeFinalizado.vue';
-import pasajeroViajeCancelado from './components/pasajeroViajeCancelado.vue';
-import conductorViajeCancelado from './components/conductorViajeCancelado.vue';
-import conductorViajeFinalizado from './components/conductorViajeFinalizado.vue';
+import VueRouter from 'vue-router'
+import Login from './components/Login.vue'
+import Homepage from './components/homepage/Homepage.vue'
+import Category from './components/warehouse/Category.vue'
+import Articles from './components/warehouse/Articles.vue'
+import Ingresos from './components/purchases/Income.vue'
+import Proveedor from './components/purchases/Vendors.vue'
+import Ventas from './components/sales/Sales.vue'
+import Clientes from './components/sales/Customers.vue'
+import Usuarios from './components/access/Users.vue'
 import axios from 'axios'
 
 Vue.config.productionTip = false
@@ -26,13 +27,14 @@ Vue.use(VueRouter)
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
-  {path: '/pasajerosolicitarviaje', component: pasajeroSolicitarViaje},
-  { path: '/buscarconductor', component: pasajeroViaje},
-  { path: '/buscarpasajero', component: conductorBuscarPasajero},
-  { path: '/pasajero/viajefinalizado', component: pasajeroViajeFinalizado},
-  { path: '/pasajero/viajecancelado', component: pasajeroViajeCancelado},
-  { path: '/conductor/viajecancelado', component: conductorViajeCancelado},
-  { path: '/conductor/viajefinalizado', component: conductorViajeFinalizado},
+  { path: '/homepage', component: Homepage },
+  { path: '/categorias', component: Category },
+  { path: '/articulos', component: Articles },
+  { path: '/ingreso', component: Ingresos },
+  { path: '/proveedor', component: Proveedor },
+  { path: '/venta', component: Ventas },
+  { path: '/cliente', component: Clientes },
+  { path: '/usuario', component: Usuarios },
 ]
 const router = new VueRouter({
   mode:'history',
@@ -42,19 +44,15 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     token: null,
-    theUser: null,
-    idHistorial: null
+    usuario: null
 
   },
   mutations: {
     setToken(state,token){
       state.token=token;
     },
-    setUsuario(state,theUser){
-      state.theUser=theUser;
-    },
-    setIdHistorial(state, idHistorial){
-      state.idHistorial=idHistorial;
+    setUsuario(state,usuario){
+      state.usuario=usuario;
     }
   },
 
@@ -63,7 +61,7 @@ const store = new Vuex.Store({
       console.log("data")
       console.log(data.token)
       commit("setToken", data.token)
-      commit("setUsuario", data.theUser)
+      commit("setUsuario", data.usuario)
       localStorage.setItem("token", data.token)
     },
     autoLogin({commit}){
@@ -79,10 +77,8 @@ const store = new Vuex.Store({
       commit("setUsuario", null);
       localStorage.removeItem("token");
       router.push("/login");
-    },
-    guardarIdHistorial({commit},data){
-      commit("setIdHistorial", data);
     }
+
   },
   modules: {
   }
